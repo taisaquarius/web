@@ -6,16 +6,12 @@ if [ ! -e /etc/nginx/conf.d/nginx.conf ]; then
     ln -s /etc/nginx/conf.d/nginx.conf /home/box/web/etc/nginx.conf
 fi
 
-if  ! $(systemctl is-active --quiet nginx); then
-    echo 'start nginx'
-    service nginx start
-fi
+echo 'start nginx'
+service nginx start
 
 # mysql config
-if  ! $(systemctl is-active --quiet mysql); then
-    echo 'start mysql'
-    service mysql start
-fi
+echo 'start mysql'
+service mysql start
 
 mysql -uroot -e "CREATE DATABASE IF NOT EXISTS qa;"
 mysql -uroot -e "CREATE USER IF NOT EXISTS 'box'@'localhost' IDENTIFIED BY 'box';"
