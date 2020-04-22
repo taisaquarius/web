@@ -14,7 +14,7 @@ echo 'start mysql'
 service mysql start
 
 mysql -uroot -e "CREATE DATABASE IF NOT EXISTS qa;"
-mysql -uroot -e "CREATE USER IF NOT EXISTS 'box'@'localhost' IDENTIFIED BY 'box';"
+# mysql -uroot -e "CREATE USER IF NOT EXISTS 'box'@'localhost' IDENTIFIED BY 'box';"
 mysql -uroot -e "GRANT ALL PRIVILEGES ON qa.* TO 'box'@'localhost' WITH GRANT OPTION;"
 
 # start gunicorn
