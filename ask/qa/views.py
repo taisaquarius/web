@@ -17,7 +17,7 @@ def test(request, *args, **kwargs):
 
 def new_question(request):
     questions = Question.objects.new()
-    limit = request.GET.get('limit', 2)
+    limit = request.GET.get('limit', 10)
     page_number = request.GET.get('page', 1)
     paginator = Paginator(questions, limit)
     paginator.baseurl = '/?page='
@@ -30,7 +30,7 @@ def new_question(request):
 
 def popular_question(request):
     questions = Question.objects.popular()
-    limit = request.GET.get('limit', 2)
+    limit = request.GET.get('limit', 10)
     page_number = request.GET.get('page', 1)
     paginator = Paginator(questions, limit)
     paginator.baseurl = '/popular/?page='
