@@ -8,6 +8,7 @@ fi
 
 echo 'start nginx'
 service nginx start
+nginx -s reload
 
 # mysql config
 echo 'start mysql'
