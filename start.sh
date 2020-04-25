@@ -20,4 +20,6 @@ mysql -uroot -e "GRANT ALL PRIVILEGES ON qa.* TO 'box'@'localhost' WITH GRANT OP
 # start gunicorn
 echo 'start gunicorn'
 cd ask
+./manage.py makemigrations 
+./manage.py migrate
 gunicorn ask.wsgi
