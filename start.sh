@@ -3,7 +3,7 @@
 # nginx config
 if [ ! -L /etc/nginx/conf.d/nginx.conf ]; then
     echo 'creating symlink for nginx config'
-    ln -s /etc/nginx/conf.d/nginx.conf /home/box/web/etc/nginx.conf
+    ln -s /home/box/web/etc/nginx.conf /etc/nginx/conf.d/nginx.conf 
 fi
 
 echo 'start nginx'
