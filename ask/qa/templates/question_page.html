@@ -1,0 +1,21 @@
+<!DOCTYPE html> 
+<html>
+<head>
+    <title>
+      new questions  
+    </title>   
+</head>
+<body>
+    <h1>{{question.title}}</h1>
+    <p>
+        {{question.text}}
+    </p>
+    <ol>
+        {% for answer in answers %}
+    <li>
+        {{answer.text}}
+    </li>
+{% endfor %}
+    </ol>   
+</body>
+</html>

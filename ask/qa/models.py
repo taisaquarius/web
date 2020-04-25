@@ -26,9 +26,10 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
+    objects = models.Manager()
     text = models.TextField('')
     added_at = models.DateTimeField(auto_now_add=True)
-    question = models.OneToOneField(Question)
+    question = models.OneToOneField(Question, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     class Meta:
         db_table = 'Answer'
