@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # nginx config
-if [ ! -e /etc/nginx/conf.d/nginx.conf ]; then
+if [ ! -L /etc/nginx/conf.d/nginx.conf ]; then
     echo 'creating symlink for nginx config'
     ln -s /etc/nginx/conf.d/nginx.conf /home/box/web/etc/nginx.conf
 fi
