@@ -2,25 +2,14 @@
 <html>
 <head>
     <title>
-      new questions  
+      new question  
     </title>   
 </head>
 <body>
-    <h1>{{question.title}}</h1>
-    <p>
-        {{question.text}}
-    </p>
-    <ol>
-        {% for answer in answers %}
-    <li>
-        {{answer.text}}
-    </li>
-{% endfor %}
-    </ol>  
     {% for e in form.non_field_errors %}
         <div class="alert alert-danger">{{ e }}</div>
     {% endfor %}
-    <form class="form-horizontal" method="post" action="/question/{{ question.id }}">
+    <form class="form-horizontal" method="post" action="/ask/">
         {% csrf_token %}
         <fieldset>
             {% for field in form %}
@@ -36,6 +25,6 @@
                 Submit
             </button>
         </div>
-    </form> 
+    </form>
 </body>
 </html>

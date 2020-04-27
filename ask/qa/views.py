@@ -14,16 +14,17 @@ from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator
 
 from qa.models import Question, Answer
+from qa.forms import AskForm, AnswerForm
 
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 def test(request, *args, **kwargs):
     return HttpResponse('OK')
 
 
 
-def new_question(request):
+def new_questions(request):
     questions = Question.objects.new()
     limit = request.GET.get('limit', 10)
     page_number = request.GET.get('page', 1)
@@ -50,16 +51,41 @@ def popular_question(request):
     })
 
 
-@require_GET
 def question(request,slug):
     question = get_object_or_404(Question, id = slug)
     try:
         answers = Answer.objects.all().filter(question_id = slug)
     except answers.DoesNotExist:
         answers = None
-    return render(request, 'question_page.html', {
-        'question': question,
-        'answers': answers })
+    if request.method == "GET":
+        form = AnswerForm()
+        return render(request, 'question_page.html', {
+            'question': question,
+            'answers': answers,
+            'form': form })
+    else:
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save()
+        return render(request,'question_page.html', {
+            'question': question,
+            'answers': answers,
+            'form': form })
+
+
+
+def create_question(request):
+    if request.method == "POST":
+        form = AskForm(request.POST)
+        if form.is_valid():
+            question = form.save()
+            id = question.id
+            return HttpResponseRedirect('/question/'+str(id))
+        
+    else:
+        form = AskForm()
+        return render(request,'ask_form.html', {'form': form})
+
 
 def new(request):
     res = Question.objects.all().aggregate(Max('rating'))                                                                                         
