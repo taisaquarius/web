@@ -1,7 +1,7 @@
 from qa.models import Session
 
 def get_user_by_session(request):
-    print(request.COOKIES.get('sessionid'))
+    print("request cookies:", request.COOKIES)
     sessionid = request.COOKIES.get('sessionid')
     if sessionid is not None:
         print("Search session:", sessionid)

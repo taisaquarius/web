@@ -117,12 +117,14 @@ def question(request,slug):
 
 
 def create_question(request):
+    print('create question request', request)
+    author = get_user_by_session(request)
     if request.method == "POST":
-        author = get_user_by_session(request)
         form = AskForm(request.POST)
         # author = get_user_by_session(request)
         # form.author.default = author.username
         if author is not None:
+            print('author was found: ', author)
             form.fields["author"].initial = author.username
         if form.is_valid():
             question = form.save()
@@ -131,9 +133,9 @@ def create_question(request):
         else:
             print(form.errors)
     else:
-        author = get_user_by_session(request)
         form = AskForm()
         if author is not None:
+            print('author was found: ', author)
             form.fields["author"].initial = author.username
         # form.author.initial = author.username
         return render(request,'ask_form.html', {'form': form})
