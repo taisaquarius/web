@@ -126,24 +126,14 @@ def create_question(request):
 
 def signup(request):
     if request.method == "POST":
-        # username = request.POST.get('username')
-        # email = request.POST.get('email')
-        # print(request.POST.get('password'))
-        # password = salt_and_hash(request.POST.get('password'))
-        # print(username, password)
-        #url = request.POST.get('continue', '/')
-        print(request.POST)
-        # form = NewUser(username.encode('utf-8'),email.encode('utf-8'),password.encode('utf-8'))
-        # form = NewUser()
-        # form.username = username.encode('utf-8')
-        # form.email = email.encode('utf-8')
-        # form.password = password.encode('utf-8')
         form = NewUser(request.POST)
+        
         if form.is_valid():
             print("NewUser form is valid")
             user = form.save()
+            url = request.POST.get('continue', '/')
             #print(user.username, user.password)
-            return HttpResponseRedirect('/')
+            return do_login(user,url)
         else:
             print("NewUser form is invalid")
             print(form.errors)
