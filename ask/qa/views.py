@@ -20,6 +20,9 @@ from qa.models import Question, Answer, User, Session
 from qa.forms import AskForm, AnswerForm, NewUser, Login
 from qa.utils import get_user_by_session
 
+import random
+import string
+
 # Create your views here.
 from django.http import HttpResponse, HttpResponseRedirect
 
@@ -42,9 +45,14 @@ def authenticate_user(login, password):
 #     hash = hashlib.md5(password).hexdigest()
 #     return hash
 
+def randomString(stringLength=8):
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for i in range(stringLength))
+
+
 def do_login(user,url):
     expires = datetime.now(tz=timezone.utc) + timedelta(days=5)
-    session = Session.objects.create(key="common", user=user, expires=expires)
+    session = Session.objects.create(key=randomString(5), user=user, expires=expires)
     print("New session:", session.key, ", user:", user)
     response = HttpResponseRedirect(url)
     response.set_cookie('sessionid', session.key,
