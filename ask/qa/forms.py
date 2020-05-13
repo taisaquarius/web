@@ -43,7 +43,7 @@ class AnswerForm(forms.Form):
 
 
 def salt_and_hash(password):
-    hash = hashlib.md5(password).hexdigest()
+    hash = hashlib.md5(password.encode('utf-8')).hexdigest()
     return hash
 
 class NewUser(forms.Form):
