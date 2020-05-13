@@ -8,7 +8,9 @@ def get_user_by_session(request):
         try:
             session = Session.objects.get(key=sessionid) 
         except Exception:
+            print("Session not found:", sessionid)
             return None
         return session.user
     else:
+        print("Session not specified")
         return None
