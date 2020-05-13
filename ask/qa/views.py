@@ -89,7 +89,9 @@ def question(request,slug):
     except answers.DoesNotExist:
         answers = None
     if request.method == "GET":
+        author = get_user_by_session(request)
         form = AnswerForm()
+        form.fields["author"].initial = author.username
         return render(request, 'question_page.html', {
             'question': question,
             'answers': answers,
@@ -97,7 +99,7 @@ def question(request,slug):
     else:
         form = AnswerForm(request.POST)
         if form.is_valid():
-            answers = form.save()
+            form.save()
         return render(request,'question_page.html', {
             'question': question,
             'answers': answers,
@@ -110,7 +112,6 @@ def create_question(request):
         # author = get_user_by_session(request)
         # form.author.default = author.username
         if form.is_valid():
-            print('ok')
             question = form.save()
             id = question.id
             return HttpResponseRedirect('/question/'+str(id))
