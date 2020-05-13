@@ -86,12 +86,14 @@ def question(request,slug):
     try:
         answers = Answer.objects.all().filter(question_id = slug)
     except answers.DoesNotExist:
+        print('answers were not found for question', slug)
         answers = None
     if request.method == "GET":
         author = get_user_by_session(request)
         form = AnswerForm()
         if author is not None:
             form.fields["author"].initial = author.username
+            print('user', author, 'was extracted from session')
         return render(request, 'question_page.html', {
             'question': question,
             'answers': answers,
@@ -100,6 +102,10 @@ def question(request,slug):
         form = AnswerForm(request.POST)
         if form.is_valid():
             form.save()
+            print('answer was saved')
+        else:
+            print('answer form is invalid')
+            print(form.errors)
         return render(request,'question_page.html', {
             'question': question,
             'answers': answers,
