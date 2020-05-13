@@ -9,7 +9,6 @@ from django.contrib.auth import authenticate
 from django.db.models import Max                                                                                                                      
 from django.utils import timezone 
 import time
-import pytz
 from datetime import datetime, timedelta
 import uuid
 import hashlib
@@ -47,7 +46,7 @@ def do_login(user,url):
     session = Session()
     session.key = uuid.uuid1()
     session.user = user
-    session.expires = datetime.now(tz=pytz.UTC) + timedelta(days=5)
+    session.expires = datetime.today() + timedelta(days=5)
     session.save()
     print(session.key)
     response = HttpResponseRedirect(url)
