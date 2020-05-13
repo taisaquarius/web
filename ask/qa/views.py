@@ -131,8 +131,8 @@ def create_question(request):
         if author is not None:
             print('author was found: ', author)
             # form.fields["author"].initial = author.username
-            form.cleaned_data['author'] = author.username
         if form.is_valid():
+            form.cleaned_data['author'] = author.username
             question = form.save()
             id = question.id
             return HttpResponseRedirect('/question/'+str(id))
