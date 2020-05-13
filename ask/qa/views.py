@@ -130,7 +130,8 @@ def create_question(request):
         # form.author.default = author.username
         if author is not None:
             print('author was found: ', author)
-            form.fields["author"].initial = author.username
+            # form.fields["author"].initial = author.username
+            form.cleaned_data['author'] = author.username
         if form.is_valid():
             question = form.save()
             id = question.id
@@ -141,7 +142,7 @@ def create_question(request):
         form = AskForm()
         if author is not None:
             print('author was found: ', author)
-            form.fields["author"].initial = author.username
+            # form.fields["author"].initial = author.username
         # form.author.initial = author.username
         return render(request,'ask_form.html', {'form': form})
 
