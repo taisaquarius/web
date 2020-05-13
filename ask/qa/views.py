@@ -43,12 +43,9 @@ def authenticate_user(login, password):
 #     return hash
 
 def do_login(user,url):
-    session = Session()
-    session.key = uuid.uuid1()
-    session.user = user
-    session.expires = datetime.today() + timedelta(days=5)
-    session.save()
-    print(session.key)
+    expires = datetime.now(tz=timezone.utc) + timedelta(days=5)
+    session = Session.objects.create(key=uuid.uuid1(), user=user, expires=expires)
+    print("New session:", session.key, ", user:", user)
     response = HttpResponseRedirect(url)
     response.set_cookie('sessionid', session.key,
      httponly=True, expires=session.expires)
