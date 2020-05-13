@@ -30,7 +30,7 @@ def authenticate_user(login, password):
     try:
         print("Try to login user '" , login, "' and password '", password, "'")
         user = User.objects.get(username=login)
-        if user.password == hashlib.md5(password).hexdigest():
+        if user.password == hashlib.md5(password.encode('utf-8')).hexdigest():
             return user
         else:
             return None
@@ -132,7 +132,6 @@ def signup(request):
             print("NewUser form is valid")
             user = form.save()
             url = request.POST.get('continue', '/')
-            #print(user.username, user.password)
             return do_login(user,url)
         else:
             print("NewUser form is invalid")
