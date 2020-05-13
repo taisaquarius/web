@@ -89,8 +89,9 @@ def question(request,slug):
         answers = None
     if request.method == "GET":
         author = get_user_by_session(request)
+        if author is not None:
+            form.fields["author"].initial = author.username
         form = AnswerForm()
-        form.fields["author"].initial = author.username
         return render(request, 'question_page.html', {
             'question': question,
             'answers': answers,
@@ -118,9 +119,10 @@ def create_question(request):
             print(form.errors)
     else:
         author = get_user_by_session(request)
+        if author is not None:
+            form.fields["author"].initial = author.username
         form = AskForm()
         # form.author.initial = author.username
-        form.fields["author"].initial = author.username
         return render(request,'ask_form.html', {'form': form})
 
 
