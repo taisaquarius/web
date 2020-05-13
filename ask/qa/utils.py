@@ -7,7 +7,7 @@ def get_user_by_session(request):
         print("Search session:", sessionid)
         try:
             session = Session.objects.get(key=sessionid) 
-        except session.DoesNotExist:
+        except Exception:
             return None
         return session.user
     else:
