@@ -99,7 +99,11 @@ def question(request,slug):
             'answers': answers,
             'form': form })
     else:
+        author = get_user_by_session(request)
         form = AnswerForm(request.POST)
+        if author is not None:
+            form.fields["author"].initial = author.username
+            print('user', author, 'was extracted from session')
         if form.is_valid():
             form.save()
             print('answer was saved')
@@ -114,9 +118,12 @@ def question(request,slug):
 
 def create_question(request):
     if request.method == "POST":
+        author = get_user_by_session(request)
         form = AskForm(request.POST)
         # author = get_user_by_session(request)
         # form.author.default = author.username
+        if author is not None:
+            form.fields["author"].initial = author.username
         if form.is_valid():
             question = form.save()
             id = question.id

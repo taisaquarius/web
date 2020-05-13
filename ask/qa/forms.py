@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate
 class AskForm(forms.Form):
     title = forms.CharField(max_length=100)
     text = forms.CharField(widget=forms.Textarea)
-    author = forms.CharField(max_length=100)
+    author = forms.CharField(max_length=100,required=False)
 
     def __init__(self, *args, **kwargs):
         super(AskForm, self).__init__(*args, **kwargs)
@@ -26,7 +26,7 @@ class AskForm(forms.Form):
 class AnswerForm(forms.Form):
     text = forms.CharField(widget=forms.Textarea)
     question = forms.IntegerField()
-    author = forms.CharField(max_length=100)
+    author = forms.CharField(max_length=100, required=False)
 
 
     def __init__(self, *args, **kwargs):
